@@ -18,9 +18,6 @@ const movieData: Movie[] = [
     }
 ]
 
-const noMovies: Movie[] = [
-
-]
 export function Home() {
     const [favourites, setFavourites] = useState<string[]>([])
 
@@ -39,7 +36,7 @@ export function Home() {
 
     return (
         <div className="flex gap-4">
-            <MovieList movies={noMovies} favorites={favourites} onFavourite={handleFavourite} />
+            <MovieList movies={movieData} favorites={favourites} onFavourite={handleFavourite} />
         </div>
 
     )
