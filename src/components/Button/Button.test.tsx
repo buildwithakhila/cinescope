@@ -8,7 +8,7 @@ describe('Button', () => {
     it('shows the label', () => {
         render(<Button label='Watch Now' variant='primary' onClick={vi.fn()} />)
         expect(screen.getByText('Watch Now')).toBeInTheDocument();
-    })
+    });
 
     it('onclick of button', async () => {
         const onClick = vi.fn()
@@ -18,8 +18,8 @@ describe('Button', () => {
             name: 'Watch Now',
         });
         await user.click(button)
-        expect(onClick).toHaveBeenCalled;
-    })
+        expect(onClick).toHaveBeenCalled();
+    });
 
     it('onclick of disabled button', async () => {
         const onClick = vi.fn()

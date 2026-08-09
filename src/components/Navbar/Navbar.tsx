@@ -5,7 +5,7 @@ function getStyle(isActive: boolean): string {
 }
 function Navbar() {
     return (
-        <nav className={'flex gap-4'}>
+        <nav className={'flex gap-4 py-4'}>
             <NavLink to='/' end className={({ isActive }) => getStyle(isActive)} >Home</NavLink >
             <NavLink to='/search' className={({ isActive }) => getStyle(isActive)}>Search</NavLink >
             <NavLink to='/favourites' className={({ isActive }) => getStyle(isActive)}>Favourites</NavLink >
