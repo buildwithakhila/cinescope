@@ -6,6 +6,7 @@ import { MovieDetails } from "./pages/MovieDetails"
 import { Profile } from "./pages/Profile"
 import { Favourites } from "./pages/Favourites"
 import { NotFound } from "./pages/NotFound"
+import Navbar from "./components/Navbar/Navbar"
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <h1 className="text-4xl font-bold">Cinescope</h1>
+      <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/search' element={<Search />} />
