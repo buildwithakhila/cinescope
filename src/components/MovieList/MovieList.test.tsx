@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import MovieList from './MovieList';
 import type { Movie } from '../../type/movie';
+import userEvent from '@testing-library/user-event';
 
 describe('MovieList', () => {
     const movieData: Movie[] = [
@@ -26,9 +27,30 @@ describe('MovieList', () => {
             />
 
         );
-
-
         expect(screen.getByText('Inception')).toBeInTheDocument();
         expect(screen.getByText('Interstellar')).toBeInTheDocument();
-    })
+    });
+    it('onclick of button', async () => {
+        const onClick = vi.fn()
+        render(<MovieList movies={movieData} favorites={[]} onFavourite={onClick}
+        />)
+        const user = userEvent.setup()
+        const button = screen.getByRole('button', {
+            name: 'Add Interstellar to favourites',
+        });
+        await user.click(button)
+        expect(onClick).toHaveBeenCalledWith('2');
+    });
+
+    it('shows empty state when there are no movies', () => {
+        render(
+            <MovieList
+                movies={[]}
+                favorites={[]}
+                onFavourite={vi.fn()}
+            />
+        );
+
+        expect(screen.getByText('No movies found')).toBeInTheDocument();
+    });
 })
