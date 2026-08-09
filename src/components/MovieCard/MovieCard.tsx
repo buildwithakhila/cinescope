@@ -23,7 +23,7 @@ const MovieCard = ({ title, poster, year, rating, isFavourite, onFavourite }: Mo
                     <button
                         type="button"
                         onClick={onFavourite}
-                        aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
+                        aria-label={isFavourite ? 'Remove from favourites' : `Add ${title} to favourites`}
                     >
                         <Heart
                             color={isFavourite ? 'red' : 'black'}

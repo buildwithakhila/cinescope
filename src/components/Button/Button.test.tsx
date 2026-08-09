@@ -18,7 +18,7 @@ describe('Button', () => {
             name: 'Watch Now',
         });
         await user.click(button)
-        expect(onClick).toHaveBeenCalled;
+        expect(onClick).toHaveBeenCalled();
     });
 
     it('onclick of disabled button', async () => {
