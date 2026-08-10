@@ -7,12 +7,13 @@ import { Profile } from "./pages/Profile"
 import { Favourites } from "./pages/Favourites"
 import { NotFound } from "./pages/NotFound"
 import Navbar from "./components/Navbar/Navbar"
+import { FavouriteProvider } from "./context/FavouriteContext"
 
 
 function App() {
 
   return (
-    <>
+    <FavouriteProvider>
       <h1 className="text-4xl font-bold">Cinescope</h1>
       <Navbar />
       <Routes>
@@ -23,7 +24,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes >
-    </>
+    </FavouriteProvider>
   )
 }
 
