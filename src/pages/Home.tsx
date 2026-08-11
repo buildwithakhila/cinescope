@@ -20,10 +20,10 @@ export function Home() {
     });
 
     if (isPending)
-        return (<p>Waiting</p>)
+        return (<p>Loading Movies...</p>)
 
     if (isError)
-        return (<p>Error loading Movies</p>)
+        return (<p>Error Loading Movies</p>)
 
     return (
         <div className="flex gap-4">

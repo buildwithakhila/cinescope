@@ -19,9 +19,10 @@ export async function getPopularMovies(): Promise<Movie[]> {
         headers: { Authorization: `Bearer ${TMDB_READ_TOKEN}` }
     })
 
-    const movies: TMDBMoviesResponse = await response.json()
     if (!response.ok)
         throw new Error('failed API fetch movies')
+
+    const movies: TMDBMoviesResponse = await response.json()
 
     const popularMovies: Movie[] = movies.results.map((result) => ({
         id: result.id.toString(),

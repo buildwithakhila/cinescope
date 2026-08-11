@@ -24,9 +24,9 @@ export function Search() {
     })
 
     if (isPending)
-        return (<p>Loading</p>)
+        return (<p>Loading Movies...</p>)
     if (isError)
-        return (<p>error Loading movies</p>)
+        return (<p>Error Loading Movies</p>)
     return (
         <div >
             <input value={search} onChange={handleSearch} placeholder="Search movies..." className="border border-gray-300 rounded-md mb-4 px-3 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-red-500" />
