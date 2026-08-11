@@ -1,7 +1,8 @@
 import { useContext, useState } from "react"
-import { movieData } from "../data/movies"
 import MovieList from "../components/MovieList/MovieList"
 import { FavouriteContext } from "../context/FavouriteContext"
+import { useQuery } from "@tanstack/react-query"
+import { getPopularMovies } from "../services/tmdb"
 
 export function Search() {
     const [search, setSearch] = useState<string>('')
@@ -16,6 +17,16 @@ export function Search() {
         throw new Error('FavouriteContext must be used inside FavouriteProvider')
 
     const { favourites, handleFavourite } = context
+
+    const { data: movieData = [], isPending, isError } = useQuery({
+        queryKey: ['popularMovies'],
+        queryFn: getPopularMovies
+    })
+
+    if (isPending)
+        return (<p>Loading</p>)
+    if (isError)
+        return (<p>error Loading movies</p>)
     return (
         <div >
             <input value={search} onChange={handleSearch} placeholder="Search movies..." className="border border-gray-300 rounded-md mb-4 px-3 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-red-500" />
