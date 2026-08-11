@@ -1,6 +1,7 @@
 import { Heart } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 type MovieCardProps = {
+    id: string,
     title: string,
     poster: string,
     year: string,
@@ -8,7 +9,7 @@ type MovieCardProps = {
     isFavourite: boolean
     onFavourite: () => void
 }
-const MovieCard = ({ title, poster, year, rating, isFavourite, onFavourite }: MovieCardProps) => {
+const MovieCard = ({ id, title, poster, year, rating, isFavourite, onFavourite }: MovieCardProps) => {
     return (
         <div className="w-64 rounded-xl overflow-hidden bg-white shadow-md">
             <img
@@ -19,7 +20,7 @@ const MovieCard = ({ title, poster, year, rating, isFavourite, onFavourite }: Mo
 
             <div className="p-3">
                 <div className="flex justify-between">
-                    <p className="font-bold">{title}</p>
+                    <Link to={`/movie/${id}`}>{title}</Link>
                     <button
                         type="button"
                         onClick={onFavourite}
@@ -36,7 +37,7 @@ const MovieCard = ({ title, poster, year, rating, isFavourite, onFavourite }: Mo
                     <p>⭐ {rating}</p>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -7,6 +7,7 @@ describe('MovieCard', () => {
     it('Show movie details', () => {
         render(
             <MovieCard
+                id='1'
                 title='Inception'
                 poster="https://example.com/inception.jpg"
                 year='2018'
@@ -33,6 +34,7 @@ describe('MovieCard', () => {
 
         render(
             <MovieCard
+                id='1'
                 title="Inception"
                 poster="https://example.com/inception.jpg"
                 year="2018"
