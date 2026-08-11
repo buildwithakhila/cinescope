@@ -14,6 +14,7 @@ const MovieList = ({ movies, favorites, onFavourite }: MovieListProps) => {
         return (
             movies.map((movie) => (<MovieCard
                 key={movie.id}
+                id={movie.id}
                 title={movie.title}
                 poster={movie.poster}
                 year={movie.year}
