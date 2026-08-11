@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { MovieDetails } from './MovieDetails';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { FavouriteProvider } from '../context/FavouriteContext';
@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 
 
 describe('Movie details', () => {
-    it('is id changing', () => {
+    it('show movie details for the given id', () => {
         render(
 
             <FavouriteProvider>
