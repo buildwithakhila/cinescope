@@ -10,9 +10,7 @@ export function Search() {
     const[debouncedSearch, setDebouncedSearch]= useState<string>('')
 
    useEffect(() => {
-  
-  const timer = setTimeout(() => {
-    console.log('Timer completed:', search);
+    const timer = setTimeout(() => {
     setDebouncedSearch(search.trim());
   }, 800);
 
