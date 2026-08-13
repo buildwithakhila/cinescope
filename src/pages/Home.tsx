@@ -26,7 +26,7 @@ export function Home() {
         return (<p>Error Loading Movies</p>)
 
     return (
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
             <MovieList movies={data} favorites={favourites} onFavourite={handleFavourite} />
         </div>
 
