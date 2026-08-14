@@ -15,16 +15,17 @@ export function MovieDetails() {
     }
     )
     
-    if (!movie) {
-        return (<p>No Movie Found</p>)
-    }
-
     if(isLoading){
         return(<p>Loading movie details</p>)
     }
     if(isError){
         return(<p>Error loading movie details</p>)
     }
+     if (!movie) {
+        return (<p>No Movie Found</p>)
+    }
+
+    
     const context = useContext(FavouriteContext)
     if (!context)
         throw new Error('use context within provider')

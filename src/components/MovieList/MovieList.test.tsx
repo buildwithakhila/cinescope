@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import MovieList from './MovieList';
 import type { Movie } from '../../type/movie';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('MovieList', () => {
     const movieData: Movie[] = [
@@ -23,8 +24,10 @@ describe('MovieList', () => {
     ];
     it('All Movies are rendered', () => {
         render(
+            <MemoryRouter>
             <MovieList movies={movieData} favorites={[]} onFavourite={vi.fn()}
             />
+            </MemoryRouter>
 
         );
         expect(screen.getByText('Inception')).toBeInTheDocument();
@@ -32,8 +35,8 @@ describe('MovieList', () => {
     });
     it('onclick of button', async () => {
         const onClick = vi.fn()
-        render(<MovieList movies={movieData} favorites={[]} onFavourite={onClick}
-        />)
+        render(<MemoryRouter><MovieList movies={movieData} favorites={[]} onFavourite={onClick}
+        /></MemoryRouter>)
         const user = userEvent.setup()
         const button = screen.getByRole('button', {
             name: 'Add Interstellar to favourites',

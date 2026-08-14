@@ -1,57 +1,104 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import { MovieDetails } from './MovieDetails';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { FavouriteProvider } from '../context/FavouriteContext';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
 
+import { MovieDetails } from './MovieDetails';
+import { FavouriteProvider } from '../context/FavouriteContext';
+import { getMovieDetails } from '../services/tmdb';
 
-describe('Movie details', () => {
-    it('show movie details for the given id', () => {
-        render(
+vi.mock('../services/tmdb', () => ({
+  getMovieDetails: vi.fn(),
+}));
 
-            <FavouriteProvider>
-                <MemoryRouter initialEntries={['/movie/1']}>
-                    <Routes><Route path='/movie/:id' element={<MovieDetails />} /></Routes>
+function renderMovieDetails(path: string) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
 
-                </MemoryRouter>
-            </FavouriteProvider>)
-        expect(screen.getByText('Inception')).toBeInTheDocument()
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <FavouriteProvider>
+        <MemoryRouter initialEntries={[path]}>
+          <Routes>
+            <Route path="/movie/:id" element={<MovieDetails />} />
+          </Routes>
+        </MemoryRouter>
+      </FavouriteProvider>
+    </QueryClientProvider>
+  );
+}
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
+
+describe('MovieDetails', () => {
+  it('shows movie details for the given id', async () => {
+    vi.mocked(getMovieDetails).mockResolvedValue({
+      id: '1',
+      title: 'Inception',
+      poster: 'inception.jpg',
+      year: '2010',
+      rating: 8.8,
+      overview: 'Dreams within dreams',
     });
 
-    it('no movie found', () => {
-        render(
+    renderMovieDetails('/movie/1');
 
-            <FavouriteProvider>
-                <MemoryRouter initialEntries={['/movie/999']}>
-                    <Routes><Route path='/movie/:id' element={<MovieDetails />} /></Routes>
+    expect(
+      await screen.findByText('Inception')
+    ).toBeInTheDocument();
 
-                </MemoryRouter>
-            </FavouriteProvider>)
-        expect(screen.getByText('No Movie Found')).toBeInTheDocument()
+    expect(
+      screen.getByText('Dreams within dreams')
+    ).toBeInTheDocument();
+  });
+
+  it('shows error when movie details cannot be loaded', async () => {
+    vi.mocked(getMovieDetails).mockRejectedValue(
+      new Error('Movie details not found')
+    );
+
+    renderMovieDetails('/movie/999');
+
+    expect(
+      await screen.findByText('Error loading movie details')
+    ).toBeInTheDocument();
+  });
+
+  it('adds movie to favourites when favourite button is clicked', async () => {
+    vi.mocked(getMovieDetails).mockResolvedValue({
+      id: '1',
+      title: 'Inception',
+      poster: 'inception.jpg',
+      year: '2010',
+      rating: 8.8,
+      overview: 'Dreams within dreams',
     });
 
-    it('adds movie to favourites when favourite button is clicked', async () => {
-        const user = userEvent.setup();
+    const user = userEvent.setup();
 
-        render(
-            <FavouriteProvider>
-                <MemoryRouter initialEntries={['/movie/1']}>
-                    <Routes><Route path='/movie/:id' element={<MovieDetails />} /></Routes>
+    renderMovieDetails('/movie/1');
 
-                </MemoryRouter>
-            </FavouriteProvider>)
-        const button = screen.getByRole('button', {
-            name: 'Add Inception to favourites',
-        });
+    const button = await screen.findByRole('button', {
+      name: 'Add Inception to favourites',
+    });
 
-        await user.click(button);
-        expect(
-            screen.getByRole('button', {
-                name: 'Remove from favourites'
-            })
-        ).toBeInTheDocument();
+    await user.click(button);
 
-
-    })
-})
+    expect(
+      screen.getByRole('button', {
+        name: 'Remove from favourites',
+      })
+    ).toBeInTheDocument();
+  });
+});
