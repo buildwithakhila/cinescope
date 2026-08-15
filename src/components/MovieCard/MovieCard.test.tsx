@@ -19,7 +19,6 @@ describe('MovieCard', () => {
                 </MemoryRouter>
 
         );
-
         expect(
             screen.getByRole('img', { name: /inception poster/i })
         ).toBeInTheDocument();

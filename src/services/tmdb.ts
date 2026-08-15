@@ -24,9 +24,9 @@ type TMDBMovieDetails={
 
 type MovieDetails= Movie & {overview:string}
 
-export async function getPopularMovies(): Promise<Movie[]> {
+export async function getPopularMovies(page:number): Promise<Movie[]> {
 
-    const response = await fetch('https://api.themoviedb.org/3/movie/popular', {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/popular?page=${page}`, {
         headers: { Authorization: `Bearer ${TMDB_READ_TOKEN}` }
     })
 
