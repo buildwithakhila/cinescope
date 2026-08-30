@@ -1,75 +1,42 @@
-# React + TypeScript + Vite
+# Cinescope
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A movie discovery app built with React, TypeScript, and the TMDB API — browse popular movies, search, view details, and save favourites.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Browse popular movies with pagination
+- Debounced movie search
+- Movie details page (overview, rating, release year)
+- Favourites, kept in React Context
+- User profile page
+- Component library (Button, MovieCard, MovieList, Navbar) built and documented in Storybook, with accessibility (a11y) checks
+- Component/unit tests with Vitest and React Testing Library
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React 19 · TypeScript · Vite · React Router · TanStack Query · Tailwind CSS v4 · Storybook 10 · Vitest · Testing Library · Playwright · [TMDB API](https://www.themoviedb.org/documentation/api)
 
-## Expanding the ESLint configuration
+## Running locally
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. `npm install`
+2. Get a free TMDB API Read Access Token: themoviedb.org → Settings → API
+3. Create a `.env.local` file in the project root:
+4. `npm run dev`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Storybook
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+`npm run storybook` — component playground with accessibility and interaction addons.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Testing
 
-```
+`npx vitest` runs the component/unit test suite.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## License
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+MIT
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<img width="877" height="745" alt="image" src="https://github.com/user-attachments/assets/30ad06e3-89b3-4699-a83e-94e9e162a4c8" />
 
-```
+
+<img width="1437" height="836" alt="image" src="https://github.com/user-attachments/assets/9bb41284-c23b-4010-8cc3-5adc39379690" />
+
