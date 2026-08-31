@@ -7,17 +7,17 @@ import { searchMovies } from "../services/tmdb"
 
 export function Search() {
     const [search, setSearch] = useState<string>('')
-    const[debouncedSearch, setDebouncedSearch]= useState<string>('')
+    const [debouncedSearch, setDebouncedSearch] = useState<string>('')
 
-   useEffect(() => {
-    const timer = setTimeout(() => {
-    setDebouncedSearch(search.trim());
-  }, 800);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search.trim());
+        }, 800);
 
-  return () => {
-    clearTimeout(timer);
-  };
-}, [search]);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [search]);
 
     function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
         setSearch(event.target.value)
@@ -31,34 +31,40 @@ export function Search() {
     const { favourites, handleFavourite } = context
 
     const { data: movieData = [], isFetching, isError } = useQuery({
-        queryKey: ['searchMovies',debouncedSearch],
-        queryFn:()=> searchMovies(debouncedSearch),
-        enabled:debouncedSearch.trim()!==''
+        queryKey: ['searchMovies', debouncedSearch],
+        queryFn: () => searchMovies(debouncedSearch),
+        enabled: debouncedSearch.trim() !== ''
     })
 
     return (
-  <div>
-    <input
-      value={search}
-      onChange={handleSearch}
-      placeholder="Search movies..."
-      className="border border-gray-300 rounded-md mb-4 px-3 py-2 w-80"
-    />
+        <div>
+            <h1 className="mb-6 text-2xl font-bold text-gray-900">Search</h1>
 
-    {isFetching && <p>Loading movies...</p>}
+            <input
+                value={search}
+                onChange={handleSearch}
+                placeholder="Search movies..."
+                className="mb-8 w-full max-w-md rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm shadow-sm outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+            />
 
-    {isError && <p>Error loading movies</p>}
+            {isFetching && <p className="text-gray-500">Loading movies…</p>}
 
-    {search.trim() !== '' && !isFetching && !isError && (
-      <div className="flex flex-wrap gap-4">
-        <MovieList
-          movies={movieData}
-          favorites={favourites}
-          onFavourite={handleFavourite}
-        />
-      </div>
-    )}
-  </div>
-);
+            {isError && <p className="text-red-600">Error loading movies</p>}
+
+            {search.trim() !== '' && !isFetching && !isError && (
+                <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                    <MovieList
+                        movies={movieData}
+                        favorites={favourites}
+                        onFavourite={handleFavourite}
+                    />
+                </div>
+            )}
+
+            {search.trim() === '' && (
+                <p className="py-16 text-center text-gray-400">Start typing to search for a movie.</p>
+            )}
+        </div>
+    );
 
 }

@@ -11,33 +11,43 @@ type MovieCardProps = {
 }
 const MovieCard = ({ id, title, poster, year, rating, isFavourite, onFavourite }: MovieCardProps) => {
     return (
-        <div className="w-64 rounded-xl overflow-hidden bg-white shadow-md">
-            <img
-                className="w-full h-96 object-cover"
-                src={poster}
-                alt={`${title} poster`}
-            />
+        <div className="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-200 transition-shadow hover:shadow-lg">
+            <Link to={`/movie/${id}`} className="block aspect-[2/3] w-full overflow-hidden bg-gray-100">
+                <img
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    src={poster}
+                    alt={`${title} poster`}
+                />
+            </Link>
 
             <div className="p-3">
-                <div className="flex justify-between">
-                    <Link to={`/movie/${id}`}>{title}</Link>
+                <div className="flex items-start justify-between gap-2">
+                    <Link
+                        to={`/movie/${id}`}
+                        className="line-clamp-1 text-sm font-semibold text-gray-900 hover:text-red-600"
+                        title={title}
+                    >
+                        {title}
+                    </Link>
                     <button
                         type="button"
                         onClick={onFavourite}
+                        className="shrink-0 rounded-full p-1 hover:bg-gray-100"
                         aria-label={isFavourite ? 'Remove from favourites' : `Add ${title} to favourites`}
                     >
                         <Heart
-                            color={isFavourite ? 'red' : 'black'}
-                            fill={isFavourite ? 'red' : 'none'}
+                            size={18}
+                            color={isFavourite ? '#dc2626' : '#9ca3af'}
+                            fill={isFavourite ? '#dc2626' : 'none'}
                         />
                     </button>
                 </div>
-                <div className="flex justify-between">
-                    <p>{year}</p>
-                    <p>⭐ {rating}</p>
+                <div className="mt-1.5 flex items-center justify-between text-xs text-gray-500">
+                    <span>{year}</span>
+                    <span className="flex items-center gap-1 font-semibold text-amber-600">⭐ {rating}</span>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

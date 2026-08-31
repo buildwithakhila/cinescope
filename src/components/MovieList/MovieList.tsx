@@ -8,7 +8,7 @@ type MovieListProps = {
 }
 const MovieList = ({ movies, favorites, onFavourite }: MovieListProps) => {
     if (movies.length === 0) {
-        return (<p className="text-red-700">No movies found</p>)
+        return (<p className="col-span-full py-16 text-center text-gray-500">No movies found</p>)
     }
     else {
         return (
